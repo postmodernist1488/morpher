@@ -156,6 +156,7 @@ def help(program):
     print(f"-n<frames>                           set the number of frames; default is {DEFAULT_NFRAMES}")
     print(f"-d<seconds>, --duration=<seconds>    set the duration of a GIF in secodns; default is {DEFAULT_DURATION}")
     print(f"-f<format>                           set the output format; default is {str(DEFAULT_FORMAT)[7:]}")
+    print("-l<times>, --loop<times>              a number of loops for a GIF animation; default is 0 (meaning loop indefinitely)")
     print("-h                                   print this help message and exit")
     exit(0)
 
@@ -169,6 +170,7 @@ def main():
     nframes = DEFAULT_NFRAMES
     duration = DEFAULT_DURATION
     format = DEFAULT_FORMAT
+    loop = 0
 
     while argv:
         arg = argv.pop(0)
@@ -198,6 +200,20 @@ def main():
                 assert duration > 0
             except (ValueError, AssertionError):
                 eprint(f'{program}: error: a positive duration in seconds should be provided after `--duration=`')
+                exit(1)
+        elif arg.startswith("--loop="):
+            try:
+                loop = int(arg[7:])
+                assert loop >= -1
+            except (ValueError, AssertionError):
+                eprint(f'{program}: error: a valid loop number should be provided after `--loop=`')
+                exit(1)
+        elif arg.startswith("-l"):
+            try:
+                loop = int(arg[2:])
+                assert loop >= -1
+            except (ValueError, AssertionError):
+                eprint(f'{program}: error: a valid loop number should be provided after `-l`')
                 exit(1)
 
         elif arg == "--gif":
@@ -277,7 +293,7 @@ def main():
 
     if format == Format.GIF:
         frames[0].save(f'{output_path}',
-               save_all=True, append_images=frames[1:], optimize=True, duration=duration * 1000.0 / nframes)
+               save_all=True, append_images=frames[1:], optimize=True, duration=duration * 1000.0 / nframes, loop=loop)
     elif format == Format.PNG:
         for i, frame in enumerate(frames):
             frame.save(f'{output_path}/{i + 1}.png')
