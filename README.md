@@ -9,7 +9,7 @@ You need to provide two png images like the examples:
 ```
 $ ./morpher.py iceland.png ireland.png -o ice_to_ir.GIF
 ```
-$ You can change the number of frames generated and the duration of the GIF:
+You can change the number of frames generated and the duration of the GIF:
 ```
 $ ./morpher.py iceland.png ireland.png -n50 --duration=3
 ```
