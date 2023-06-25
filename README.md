@@ -7,7 +7,7 @@ Inspired by my friend asking whether generation of [such images](https://www.red
 
 You need to provide two png images like the examples:
 ```
-$ ./morpher.py iceland.png ireland.png -o ice_to_ir.GIF
+$ ./morpher.py iceland.png ireland.png -o ice_to_ir.gif
 ```
 You can change the number of frames generated and the duration of the GIF:
 ```
