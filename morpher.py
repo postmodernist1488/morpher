@@ -225,7 +225,7 @@ def main():
         else:
             output_path = 'res'
 
-    if not isdir(output_path) and format != Format.GIF:
+    if isfile(output_path) and format != Format.GIF:
         eprint(f'{program}: error: `{output_path}` is not a directory')
         exit(1)
 
